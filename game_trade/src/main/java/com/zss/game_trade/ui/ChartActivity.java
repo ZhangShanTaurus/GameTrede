@@ -25,7 +25,7 @@ public class ChartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test);
 
         mChart = (PieChart) findViewById(R.id.spread_pie_chart);
         PieData mPieData = getPieData(4, 100);

@@ -1,125 +1,102 @@
 package com.zss.game_trade.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.zss.game_trade.GameTradeApp;
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zss.game_trade.R;
-import com.zss.game_trade.entity.User;
-import com.zss.game_trade.gen.UserDao;
+import com.zss.game_trade.ui.basic.BaseFragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * 主页面
+ * Created by Administrator on 2016/11/9.
+ */
+public class MainActivity extends BaseFragmentActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-    private ListView listView;
-    private NoteAdapter adapter;
-    private UserDao userDao;
+    private List<Fragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-        initAdapter();
-        userDao = GameTradeApp.getInstances().getDaoSession().getUserDao();
+        initBottomNavigationBar();
+        fragmentList = getFragmentList();
+        setDefaultFragment();
     }
 
-    protected void initViews() {
-        Button addBtn = (Button) findViewById(R.id.add);
-        if (addBtn != null) {
-            addBtn.setOnClickListener(this);
-        }
-        Button queryBtn = (Button) findViewById(R.id.query);
-        if (queryBtn != null) {
-            queryBtn.setOnClickListener(this);
-        }
-        listView = (ListView) findViewById(R.id.listView);
-    }
-
-    private void initAdapter() {
-        adapter = new NoteAdapter();
-        listView.setAdapter(adapter);
-    }
-
-    private void add() {
-        User user = new User(null, "hello");
-        userDao.insert(user);
-    }
-
-    private void query() {
-        List<User> list = userDao.loadAll();
-        if (list != null) {
-            adapter.setData(list);
+    @Override
+    public void onTabSelected(int position) {
+        if (fragmentList != null && position < fragmentList.size()) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            Fragment fragment = fragmentList.get(position);
+            if (fragment.isAdded()) {
+                transaction.replace(R.id.layoutFrame, fragment);
+            } else {
+                transaction.add(R.id.layoutFrame, fragment);
+            }
+            transaction.commitAllowingStateLoss();
         }
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add:
-                add();
-                startActivity(new Intent(MainActivity.this, ChartActivity.class));
-                break;
-            case R.id.query:
-                query();
-                break;
+    public void onTabUnselected(int position) {
+        if (fragmentList != null && position < fragmentList.size()) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            Fragment fragment = fragmentList.get(position);
+            transaction.remove(fragment);
+            transaction.commitAllowingStateLoss();
         }
     }
 
+    @Override
+    public void onTabReselected(int position) {
 
-    static class NoteAdapter extends BaseAdapter {
-        private List<User> list = new ArrayList<>();
+    }
 
-        @Override
-        public int getCount() {
-            return list.size();
-        }
+    /**
+     * 初始化底部导航栏
+     */
+    private void initBottomNavigationBar() {
+        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar.setTabSelectedListener(this);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_CLASSIC);//设置模式
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);//设置背景样式
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "物价")).setActiveColor(R.color.DeepSkyBlue)
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "买入"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "卖出"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "统计"))
+                .setFirstSelectedPosition(0)
+                .initialise();
+    }
 
-        @Override
-        public Object getItem(int i) {
-            return list.get(i);
-        }
+    /**
+     * 设置默认的Fragment
+     */
+    private void setDefaultFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.layoutFrame, FragmentPrice.newInstance());
+        transaction.commit();
+    }
 
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder holder;
-            if (view == null) {
-                holder = new ViewHolder();
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_note_item, viewGroup, false);
-                holder.text = (TextView) view.findViewById(R.id.text);
-                view.setTag(holder);
-            } else {
-                holder = (ViewHolder) view.getTag();
-            }
-
-            holder.text.setText(list.get(i).getName());
-            return view;
-        }
-
-        private void setData(List<User> list) {
-            this.list.clear();
-            this.list.addAll(list);
-            notifyDataSetChanged();
-        }
-
-        static class ViewHolder {
-            TextView text;
-        }
+    /**
+     * 添加Fragment
+     */
+    private List<Fragment> getFragmentList() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(FragmentPrice.newInstance());
+        fragments.add(FragmentBuy.newInstance());
+        fragments.add(FragmentSale.newInstance());
+        fragments.add(FragmentStatistics.newInstance());
+        return fragments;
     }
 }
