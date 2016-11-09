@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zss.game_trade.R;
+import com.zss.game_trade.ui.basic.BaseFragment;
 import com.zss.game_trade.ui.basic.BaseFragmentActivity;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class MainActivity extends BaseFragmentActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-    private List<Fragment> fragmentList;
+    private List<BaseFragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,30 +36,29 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
         if (fragmentList != null && position < fragmentList.size()) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            for (Fragment fragment : fragmentList) {
+                if (fragment.isAdded()) {
+                    transaction.hide(fragment);
+                }
+            }
+
             Fragment fragment = fragmentList.get(position);
             if (fragment.isAdded()) {
-                transaction.replace(R.id.layoutFrame, fragment);
+                transaction.show(fragment);
             } else {
                 transaction.add(R.id.layoutFrame, fragment);
             }
-            transaction.commitAllowingStateLoss();
+            transaction.commit();
         }
     }
 
     @Override
     public void onTabUnselected(int position) {
-        if (fragmentList != null && position < fragmentList.size()) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            Fragment fragment = fragmentList.get(position);
-            transaction.remove(fragment);
-            transaction.commitAllowingStateLoss();
-        }
     }
 
     @Override
     public void onTabReselected(int position) {
-
     }
 
     /**
@@ -66,16 +66,17 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
      */
     private void initBottomNavigationBar() {
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
-        bottomNavigationBar.setTabSelectedListener(this);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_CLASSIC);//设置模式
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);//设置背景样式
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "物价")).setActiveColor(R.color.DeepSkyBlue)
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "物价"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "买入"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "卖出"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, "统计"))
+                .setActiveColor(R.color.DeepSkyBlue)
                 .setFirstSelectedPosition(0)
                 .initialise();
+        bottomNavigationBar.setTabSelectedListener(this);
     }
 
     /**
@@ -91,8 +92,8 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
     /**
      * 添加Fragment
      */
-    private List<Fragment> getFragmentList() {
-        List<Fragment> fragments = new ArrayList<>();
+    private List<BaseFragment> getFragmentList() {
+        List<BaseFragment> fragments = new ArrayList<>();
         fragments.add(FragmentPrice.newInstance());
         fragments.add(FragmentBuy.newInstance());
         fragments.add(FragmentSale.newInstance());

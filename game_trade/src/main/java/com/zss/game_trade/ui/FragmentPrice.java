@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zss.game_trade.R;
 import com.zss.game_trade.ui.basic.BaseFragment;
 
 /**
@@ -35,6 +36,12 @@ public class FragmentPrice extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_price, container, false);
+        initView(view);
+        return view;
+    }
+
+    private void initView(View view) {
+
     }
 }
