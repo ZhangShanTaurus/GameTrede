@@ -41,4 +41,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
 }

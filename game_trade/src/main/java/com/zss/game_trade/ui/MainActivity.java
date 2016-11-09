@@ -1,5 +1,6 @@
 package com.zss.game_trade.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add:
                 add();
+                startActivity(new Intent(MainActivity.this, ChartActivity.class));
                 break;
             case R.id.query:
                 query();
