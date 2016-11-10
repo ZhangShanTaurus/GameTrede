@@ -9,5 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="卖出" />
+        android:text="卖出"
+        android:textSize="25dp"
+        android:textColor="@color/Black"/>
 </LinearLayout>

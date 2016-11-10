@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/White">
+    android:background="@color/Black"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:text="物价"
+        android:gravity="center"
+        android:text="菜单"
         android:textSize="25dp"
-        android:textColor="@color/Black"/>
+        android:textColor="@color/White"/>
 </LinearLayout>

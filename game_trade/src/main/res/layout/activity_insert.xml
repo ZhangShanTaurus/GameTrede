@@ -5,11 +5,4 @@
     android:background="@color/White"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="统计"
-        android:textColor="@color/Black"
-        android:textSize="25dp" />
 </LinearLayout>
