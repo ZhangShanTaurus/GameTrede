@@ -1,32 +1,27 @@
 package com.zss.trade.ui;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SlidingPaneLayout;
-import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zss.trade.R;
-import com.zss.trade.ui.basic.BaseFragment;
-import com.zss.trade.ui.basic.BaseFragmentActivity;
-import com.zss.trade.ui.insert.InsertActivity;
-import com.zss.trade.utils.IntentUtils;
-import com.zss.trade.widget.DragView;
+import com.zss.trade.ui.base.BaseFragment;
+import com.zss.trade.ui.base.BaseFragmentActivity;
+import com.zss.trade.widget.AddGoodsView;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * 主页面
  * Created by Administrator on 2016/11/9.
  */
 public class MainActivity extends BaseFragmentActivity implements BottomNavigationBar.OnTabSelectedListener {
-
-    private SlidingPaneLayout slidingPaneLayout;
-    private FragmentMenu fragmentMenu;
 
     private List<BaseFragment> fragmentList;
 
@@ -41,39 +36,11 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
     }
 
     private void initViews() {
-        DragView insertData = (DragView) findViewById(R.id.insertData);
-        insertData.setOnClickListener(new View.OnClickListener() {
+        AddGoodsView addGoods = (AddGoodsView) findViewById(R.id.add_goods);
+        addGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentUtils.intent(MainActivity.this, InsertActivity.class);
-            }
-        });
-        fragmentMenu = (FragmentMenu) this.getSupportFragmentManager().findFragmentById(R.id.fragment_menu);
-        fragmentMenu.setCloseMenu(new FragmentMenu.CloseMenu() {
-            @Override
-            public void closeMenu() {
-                if (slidingPaneLayout.isOpen()) {
-                    slidingPaneLayout.closePane();
-                } else {
-                    slidingPaneLayout.openPane();
-                }
-            }
-        });
-        slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidingPanel);
-        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-
-            }
-
-            @Override
-            public void onPanelOpened(View panel) {
-                fragmentMenu.setHasOptionsMenu(false);
-            }
-
-            @Override
-            public void onPanelClosed(View panel) {
-                fragmentMenu.setHasOptionsMenu(true);
+                Toast.makeText(MainActivity.this, "add goods", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -94,9 +61,9 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
             if (fragment.isAdded()) {
                 transaction.show(fragment);
             } else {
-                transaction.add(R.id.layoutFrame, fragment);
+                transaction.add(R.id.container, fragment);
             }
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
     }
 
@@ -116,10 +83,9 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_CLASSIC);//设置模式
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);//设置背景样式
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_price)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_buy)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_sale)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_statistics)))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_goods)))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_deal)))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_chart)))
                 .setActiveColor(R.color.DeepSkyBlue)
                 .setFirstSelectedPosition(0)
                 .initialise();
@@ -132,8 +98,8 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
     private void setDefaultFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.layoutFrame, FragmentPrice.newInstance());
-        transaction.commit();
+        transaction.replace(R.id.container, FragmentGoods.newInstance());
+        transaction.commitAllowingStateLoss();
     }
 
     /**
@@ -141,10 +107,9 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
      */
     private List<BaseFragment> getFragmentList() {
         List<BaseFragment> fragments = new ArrayList<>();
-        fragments.add(FragmentPrice.newInstance());
-        fragments.add(FragmentBuy.newInstance());
-        fragments.add(FragmentSale.newInstance());
-        fragments.add(FragmentStatistics.newInstance());
+        fragments.add(FragmentGoods.newInstance());
+        fragments.add(FragmentDeal.newInstance());
+        fragments.add(FragmentChart.newInstance());
         return fragments;
     }
 }

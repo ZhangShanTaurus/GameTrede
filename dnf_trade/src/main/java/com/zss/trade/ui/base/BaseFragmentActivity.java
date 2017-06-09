@@ -1,4 +1,4 @@
-package com.zss.trade.ui.basic;
+package com.zss.trade.ui.base;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
