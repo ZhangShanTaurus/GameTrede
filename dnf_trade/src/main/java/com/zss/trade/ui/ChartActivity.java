@@ -1,19 +1,18 @@
 package com.zss.trade.ui;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.zss.trade.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 /**
  * 统计图表页
@@ -25,11 +24,11 @@ public class ChartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-
-        mChart = (PieChart) findViewById(R.id.spread_pie_chart);
-        PieData mPieData = getPieData(4, 100);
-        showChart(mChart, mPieData);
+//        setContentView(R.layout.activity_test);
+//
+//        mChart = (PieChart) findViewById(R.id.spread_pie_chart);
+//        PieData mPieData = getPieData(4, 100);
+//        showChart(mChart, mPieData);
     }
 
     private void showChart(PieChart pieChart, PieData pieData) {

@@ -1,54 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.GreenDaoActivity">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <!--侧边栏-->
-    <android.support.v4.widget.SlidingPaneLayout
-        android:id="@+id/slidingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--左侧Menu-->
-        <fragment
-            android:id="@+id/fragment_menu"
-            android:name="com.zss.trade.ui.FragmentMenu"
-            android:layout_width="230dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left" />
-
-        <!--右侧Content-->
-        <LinearLayout
+    <!--右侧Content-->
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/layoutFrame"
+        <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/White" />
+                android:background="@color/White"/>
 
-            <!--底部导航栏-->
-            <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        <View android:layout_width="match_parent"
+              android:layout_height="0.5dp"
+              android:background="@color/DarkGray"/>
+
+        <!--底部导航栏-->
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
                 android:id="@+id/bottom_navigation_bar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_gravity="bottom" />
-        </LinearLayout>
-    </android.support.v4.widget.SlidingPaneLayout>
+                android:layout_gravity="bottom"/>
+    </LinearLayout>
 
-    <!--可拖动点击的View-->
-    <com.zss.trade.widget.DragView
-        android:id="@+id/insertData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginRight="20dp" />
+    <!--添加物品的View-->
+    <com.zss.trade.widget.AddGoodsView
+            android:id="@+id/add_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="20dp"/>
 </RelativeLayout>

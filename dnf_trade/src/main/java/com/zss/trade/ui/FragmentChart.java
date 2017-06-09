@@ -1,5 +1,8 @@
 package com.zss.trade.ui;
 
+import com.zss.trade.R;
+import com.zss.trade.ui.base.BaseFragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,18 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zss.trade.R;
-import com.zss.trade.ui.basic.BaseFragment;
-
 /**
- * 买入
+ * 统计
  * Created by Administrator on 2016/11/9.
  */
-public class FragmentBuy extends BaseFragment {
+public class FragmentChart extends BaseFragment {
 
-    public static FragmentBuy newInstance() {
+    public static FragmentChart newInstance() {
         Bundle args = new Bundle();
-        FragmentBuy fragment = new FragmentBuy();
+        FragmentChart fragment = new FragmentChart();
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,14 +36,9 @@ public class FragmentBuy extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buy, container, false);
+        View view = inflater.inflate(R.layout.fragment_chart, container, false);
         initView(view);
         return view;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
     }
 
     private void initView(View view) {

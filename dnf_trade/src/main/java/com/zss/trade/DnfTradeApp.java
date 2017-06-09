@@ -7,15 +7,15 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * GameTradeApp
+ * DnfTradeApp
  * Created by Administrator on 2016/11/8.
  */
-public class GameTradeApp extends Application {
+public class DnfTradeApp extends Application {
 
     private SQLiteDatabase db;
     private DaoSession mDaoSession;
 
-    private static GameTradeApp instances;
+    private static DnfTradeApp instances;
 
     @Override
     public void onCreate() {
@@ -24,7 +24,7 @@ public class GameTradeApp extends Application {
         setDatabase();
     }
 
-    public static GameTradeApp getInstances() {
+    public static DnfTradeApp getInstances() {
         return instances;
     }
 

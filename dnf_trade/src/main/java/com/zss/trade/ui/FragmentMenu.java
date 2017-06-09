@@ -1,13 +1,13 @@
 package com.zss.trade.ui;
 
+import com.zss.trade.R;
+import com.zss.trade.ui.base.BaseFragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.zss.trade.R;
-import com.zss.trade.ui.basic.BaseFragment;
 
 /**
  * 选择大区
