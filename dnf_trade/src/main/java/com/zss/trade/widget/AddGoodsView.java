@@ -1,12 +1,14 @@
 package com.zss.trade.widget;
 
 import com.zss.trade.R;
+import com.zss.trade.utils.ScreenUtils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -40,8 +42,16 @@ public class AddGoodsView extends View {
     private int mInnerLineColor;
     private float mInnerLineWidth;
 
+    /**
+     * 屏幕宽高
+     */
+    private int mScreenWidth;
+    private int mScreenHeight;
+
     public AddGoodsView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mScreenWidth = ScreenUtils.getScreenWidth();
+        mScreenHeight = ScreenUtils.getScreenHeight();
         initAttribute(attrs);
         initCirclePaint();
         initLinePaint();
@@ -116,5 +126,74 @@ public class AddGoodsView extends View {
                 break;
         }
         return result;
+    }
+
+    /**
+     * 滑动相关
+     */
+    private int mLastX;
+    private int mLastY;
+    private int mMoveX;
+    private int mMoveY;
+
+    /**
+     * 距离屏幕底部的高度
+     */
+    private int mBottomHeight;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mLastX = (int) event.getRawX();
+                mLastY = (int) event.getRawY();
+                mMoveX = mLastX;
+                mMoveY = mLastY;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int dx = (int) event.getRawX() - mLastX;
+                int dy = (int) event.getRawY() - mLastY;
+
+                int left = getLeft() + dx;
+                int top = getTop() + dy;
+                int right = getRight() + dx;
+                int bottom = getBottom() + dy;
+
+                if (left < 0) {
+                    left = 0;
+                    right = left + getWidth();
+                }
+                if (right > mScreenWidth) {
+                    right = mScreenWidth;
+                    left = right - getWidth();
+                }
+                if (top < 0) {
+                    top = 0;
+                    bottom = top + getHeight();
+                }
+                if (bottom > (mScreenHeight - mBottomHeight)) {
+                    bottom = (mScreenHeight - mBottomHeight);
+                    top = bottom - getHeight();
+                }
+
+                layout(left, top, right, bottom);
+                mLastX = (int) event.getRawX();
+                mLastY = (int) event.getRawY();
+                break;
+            case MotionEvent.ACTION_UP:
+                //避免滑出触发点击事件
+                if ((int) (event.getRawX() - mMoveX) != 0
+                        || (int) (event.getRawY() - mMoveY) != 0) {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    public void setBottomHeight(int mBottomHeight) {
+        this.mBottomHeight = mBottomHeight;
     }
 }

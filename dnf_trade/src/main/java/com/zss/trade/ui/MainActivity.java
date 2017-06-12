@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 /**
@@ -36,8 +37,18 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
     }
 
     private void initViews() {
-        AddGoodsView addGoods = (AddGoodsView) findViewById(R.id.add_goods);
-        addGoods.setOnClickListener(new View.OnClickListener() {
+        final AddGoodsView addGoodsView = (AddGoodsView) findViewById(R.id.add_goods);
+        final View view = findViewById(R.id.bottom_navigation_bar);
+        addGoodsView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        addGoodsView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        int height = view.getMeasuredHeight();
+                        addGoodsView.setBottomHeight(height);
+                    }
+                });
+        addGoodsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "add goods", Toast.LENGTH_SHORT).show();
@@ -84,7 +95,9 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);//设置背景样式
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_goods)))
+                .setActiveColor(R.color.DeepSkyBlue)
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_deal)))
+                .setActiveColor(R.color.DeepSkyBlue)
                 .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_chart)))
                 .setActiveColor(R.color.DeepSkyBlue)
                 .setFirstSelectedPosition(0)
