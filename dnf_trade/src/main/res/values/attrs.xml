@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Facishare Technology Co., Ltd. All Rights Reserved.
+  -->
+<resources>
+    <declare-styleable name="AddGoodsView">
+        <attr name="innerCircleRadius" format="dimension"/>
+        <attr name="innerCircleColor" format="color"/>
+        <attr name="outerCircleRadius" format="dimension"/>
+        <attr name="outerCircleColor" format="color"/>
+        <attr name="innerLineColor" format="color"/>
+        <attr name="innerLineWidth" format="dimension"/>
+    </declare-styleable>
+</resources>
