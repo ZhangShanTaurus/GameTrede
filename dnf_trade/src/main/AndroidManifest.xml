@@ -10,8 +10,6 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <activity android:name="com.zss.trade.ui.ChartActivity"/>
-
         <activity android:name="com.zss.trade.ui.MainActivity"
                   android:launchMode="singleTask"
                   android:screenOrientation="portrait">
