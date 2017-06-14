@@ -37,6 +37,7 @@ public class FragmentChart extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chart, container, false);
+
         initView(view);
         return view;
     }

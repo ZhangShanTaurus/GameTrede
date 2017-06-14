@@ -21,7 +21,7 @@ public class AddGoodsView extends View {
     /**
      * 内心圆相关
      */
-    private static final float DEFAULT_INNER_RADIUS = 50f;
+    private static final float DEFAULT_INNER_RADIUS = 12f;
     private int mInnerCircleColor;
     private float mInnerCircleRadius;
     private Paint mInnerCirclePaint;
@@ -29,7 +29,7 @@ public class AddGoodsView extends View {
     /**
      * 外心圆相关
      */
-    private static final float DEFAULT_OUTER_RADIUS = 75f;
+    private static final float DEFAULT_OUTER_RADIUS = 28f;
     private int mOuterCircleColor;
     private float mOuterCircleRadius;
     private Paint mOuterCirclePaint;
@@ -37,7 +37,7 @@ public class AddGoodsView extends View {
     /**
      * 直线相关
      */
-    private static final float DEFAULT_INNER_LINE_WIDTH = 6f;
+    private static final float DEFAULT_INNER_LINE_WIDTH = 3f;
     private Paint mLinePaint;
     private int mInnerLineColor;
     private float mInnerLineWidth;
@@ -60,13 +60,13 @@ public class AddGoodsView extends View {
     private void initAttribute(AttributeSet attributeSet) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attributeSet, R.styleable.AddGoodsView);
         mInnerCircleColor =
-                typedArray.getColor(R.styleable.AddGoodsView_innerCircleColor, getResources().getColor(R.color.Tan));
+                typedArray.getColor(R.styleable.AddGoodsView_innerCircleColor, getResources().getColor(R.color.Gold));
         mInnerCircleRadius = typedArray.getDimension(R.styleable.AddGoodsView_innerCircleRadius, DEFAULT_INNER_RADIUS);
         mOuterCircleColor =
-                typedArray.getColor(R.styleable.AddGoodsView_outerCircleColor, getResources().getColor(R.color.Olive));
+                typedArray.getColor(R.styleable.AddGoodsView_outerCircleColor, getResources().getColor(R.color.Gold));
         mOuterCircleRadius = typedArray.getDimension(R.styleable.AddGoodsView_outerCircleRadius, DEFAULT_OUTER_RADIUS);
         mInnerLineColor =
-                typedArray.getColor(R.styleable.AddGoodsView_innerLineColor, getResources().getColor(R.color.DimGray));
+                typedArray.getColor(R.styleable.AddGoodsView_innerLineColor, getResources().getColor(R.color.Blue));
         mInnerLineWidth = typedArray.getDimension(R.styleable.AddGoodsView_innerLineWidth, DEFAULT_INNER_LINE_WIDTH);
         typedArray.recycle();
     }
@@ -77,6 +77,7 @@ public class AddGoodsView extends View {
     private void initCirclePaint() {
         mOuterCirclePaint = new Paint();
         mOuterCirclePaint.setColor(mOuterCircleColor);
+        mOuterCirclePaint.setAntiAlias(true);
 
         mInnerCirclePaint = new Paint();
         mInnerCirclePaint.setColor(mInnerCircleColor);
