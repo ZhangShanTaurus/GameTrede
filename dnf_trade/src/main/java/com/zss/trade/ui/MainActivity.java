@@ -22,8 +22,20 @@ import android.widget.TabWidget;
 public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener {
 
     private Class[] fragments = {FragmentGoods.class, FragmentDeal.class, FragmentChart.class};
+    /**
+     * 底部TabIndicator显示的文字
+     */
     private static final TabType[] TABS = {TabType.GOODS, TabType.DEAL, TabType.CHART};
-    private static final int RES_RESOURCE[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+    /**
+     * 底部TabIndicator正常时显示的图标
+     */
+    private static final int ICON__RESOURCE_NORMAL[] = {
+            R.drawable.icon_tab_goods_normal, R.drawable.icon_tab_deal_normal, R.drawable.icon_tab_chart_normal};
+    /**
+     * 底部TabIndicator选中时显示的图标
+     */
+    private static final int ICON__RESOURCE_CHECKED[] =
+            {R.drawable.icon_tab_goods_checked, R.drawable.icon_tab_deal_checked, R.drawable.icon_tab_chart_checked};
     private FragmentTabHost tabHost;
 
     @Override
@@ -78,7 +90,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     private View getTabIndicatorView(int index) {
         TabIndicatorView tabIndicatorView = new TabIndicatorView(this);
         tabIndicatorView.setTabText(TABS[index].getDesc());
-        tabIndicatorView.setTabImageStateIcon(RES_RESOURCE[index], RES_RESOURCE[index]);
+        tabIndicatorView.setTabImageStateIcon(ICON__RESOURCE_NORMAL[index], ICON__RESOURCE_CHECKED[index]);
         return tabIndicatorView;
     }
 
