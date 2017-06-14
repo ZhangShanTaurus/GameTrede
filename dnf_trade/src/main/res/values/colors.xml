@@ -143,4 +143,8 @@
     <color name="Gray">#808080</color>
     <color name="DimGray">#696969</color>
     <color name="Black">#000000</color>
+
+    <!--主页面底部Tab导航中文字正常与选中状态颜色-->
+    <color name="main_tab_indicator_normal_color">@color/Black</color>
+    <color name="main_tab_indicator_checked_color">@color/DeepPink</color>
 </resources>

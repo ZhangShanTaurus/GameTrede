@@ -65,7 +65,8 @@ public class TabIndicatorView extends RelativeLayout {
     }
 
     public void setTabIndicatorChecked(boolean checked) {
-        mTabText.setTextColor(getResources().getColor(checked ? R.color.Beige : R.color.Black));//设置选中文字颜色
+        mTabText.setTextColor(getResources().getColor(checked ? R.color.main_tab_indicator_checked_color
+                : R.color.main_tab_indicator_normal_color));//设置选中文字颜色
         mTabText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(//为什么这里要设置为:COMPLEX_UNIT_PX?
                 checked ? R.dimen.tab_indicator_text_checked_size : R.dimen.tab_indicator_text_normal_size));//设置选中文字大小
         mTabImage.setImageResource(checked ? mFocusResId : mNormalResId);
