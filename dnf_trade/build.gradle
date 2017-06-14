@@ -42,5 +42,5 @@ dependencies {
     compile 'org.greenrobot:greendao:3.0.1'                        //GreenDao
     compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'             //统计图表
-    compile 'com.ashokvarma.android:bottom-navigation-bar:0.9.5'   //底部导航
+//    compile 'com.ashokvarma.android:bottom-navigation-bar:0.9.5'   //底部导航
 }
