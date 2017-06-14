@@ -1,44 +1,42 @@
 package com.zss.trade.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zss.trade.R;
-import com.zss.trade.ui.base.BaseFragment;
+import com.zss.trade.add_goods.AddGoodsActivity;
 import com.zss.trade.ui.base.BaseFragmentActivity;
+import com.zss.trade.utils.IntentUtils;
 import com.zss.trade.widget.AddGoodsView;
+import com.zss.trade.widget.TabIndicatorView;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentTabHost;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Toast;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 
 /**
  * 主页面
  * Created by Administrator on 2016/11/9.
  */
-public class MainActivity extends BaseFragmentActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener {
 
-    private List<BaseFragment> fragmentList;
+    private Class[] fragments = {FragmentGoods.class, FragmentDeal.class, FragmentChart.class};
+    private static final TabType[] TABS = {TabType.GOODS, TabType.DEAL, TabType.CHART};
+    private static final int RES_RESOURCE[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+    private FragmentTabHost tabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-        initBottomNavigationBar();
-        fragmentList = getFragmentList();
-        setDefaultFragment();
+        initAddGoodsViews();
+        initTabHost();
     }
 
-    private void initViews() {
+    private void initAddGoodsViews() {
         final AddGoodsView addGoodsView = (AddGoodsView) findViewById(R.id.add_goods);
-        final View view = findViewById(R.id.bottom_navigation_bar);
+        final View view = findViewById(android.R.id.tabhost);
         addGoodsView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -51,78 +49,52 @@ public class MainActivity extends BaseFragmentActivity implements BottomNavigati
         addGoodsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "add goods", Toast.LENGTH_SHORT).show();
+                IntentUtils.intent(MainActivity.this, AddGoodsActivity.class);
             }
         });
     }
 
+    private void initTabHost() {
+        tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup(this, super.getSupportFragmentManager(), R.id.content_layout);
+        tabHost.getTabWidget().setDividerDrawable(null);
+        tabHost.setOnTabChangedListener(this);
+        for (int i = 0; i < fragments.length; i++) {
+            TabHost.TabSpec tabSpec = tabHost.newTabSpec(TABS[i].getDesc()).setIndicator(getTabIndicatorView(i));
+            tabHost.addTab(tabSpec, fragments[i], null);
+        }
+        tabHost.setCurrentTabByTag(TABS[0].getDesc());
+    }
+
     @Override
-    public void onTabSelected(int position) {
-        if (fragmentList != null && position < fragmentList.size()) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-            for (Fragment fragment : fragmentList) {
-                if (fragment.isAdded()) {
-                    transaction.hide(fragment);
-                }
-            }
-
-            Fragment fragment = fragmentList.get(position);
-            if (fragment.isAdded()) {
-                transaction.show(fragment);
-            } else {
-                transaction.add(R.id.container, fragment);
-            }
-            transaction.commitAllowingStateLoss();
+    public void onTabChanged(String tabId) {
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0, count = tabWidget.getTabCount(); i < count; i++) {
+            TabIndicatorView tabIndicatorView = (TabIndicatorView) tabWidget.getChildAt(i);
+            tabIndicatorView.setTabIndicatorChecked(TextUtils.equals(tabId, TABS[i].getDesc()));
         }
     }
 
-    @Override
-    public void onTabUnselected(int position) {
+    private View getTabIndicatorView(int index) {
+        TabIndicatorView tabIndicatorView = new TabIndicatorView(this);
+        tabIndicatorView.setTabText(TABS[index].getDesc());
+        tabIndicatorView.setTabImageStateIcon(RES_RESOURCE[index], RES_RESOURCE[index]);
+        return tabIndicatorView;
     }
 
-    @Override
-    public void onTabReselected(int position) {
-    }
+    private enum TabType {
+        GOODS("Goods"),
+        DEAL("Deal"),
+        CHART("Chart");
 
-    /**
-     * 初始化底部导航栏
-     */
-    private void initBottomNavigationBar() {
-        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
-        bottomNavigationBar.setMode(BottomNavigationBar.MODE_CLASSIC);//设置模式
-        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);//设置背景样式
-        bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_goods)))
-                .setActiveColor(R.color.DeepSkyBlue)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_deal)))
-                .setActiveColor(R.color.DeepSkyBlue)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, getString(R.string.tab_chart)))
-                .setActiveColor(R.color.DeepSkyBlue)
-                .setFirstSelectedPosition(0)
-                .initialise();
-        bottomNavigationBar.setTabSelectedListener(this);
-    }
+        private String desc;
 
-    /**
-     * 设置默认的Fragment
-     */
-    private void setDefaultFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.container, FragmentGoods.newInstance());
-        transaction.commitAllowingStateLoss();
-    }
+        TabType(String desc) {
+            this.desc = desc;
+        }
 
-    /**
-     * 添加Fragment
-     */
-    private List<BaseFragment> getFragmentList() {
-        List<BaseFragment> fragments = new ArrayList<>();
-        fragments.add(FragmentGoods.newInstance());
-        fragments.add(FragmentDeal.newInstance());
-        fragments.add(FragmentChart.newInstance());
-        return fragments;
+        public String getDesc() {
+            return desc;
+        }
     }
 }

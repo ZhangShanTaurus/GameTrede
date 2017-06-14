@@ -2,31 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/White">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
             android:orientation="vertical">
 
         <FrameLayout
-                android:id="@+id/container"
+                android:id="@+id/content_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/White"/>
+                android:layout_weight="1"/>
 
         <View android:layout_width="match_parent"
               android:layout_height="0.5dp"
               android:background="@color/DarkGray"/>
 
         <!--底部导航栏-->
-        <com.ashokvarma.bottomnavigation.BottomNavigationBar
-                android:id="@+id/bottom_navigation_bar"
+        <android.support.v4.app.FragmentTabHost
+                android:id="@android:id/tabhost"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"/>
+                android:layout_height="56dp">
+
+            <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+        </android.support.v4.app.FragmentTabHost>
     </LinearLayout>
 
     <!--添加物品的View-->
@@ -38,10 +42,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="80dp"
             android:layout_marginRight="20dp"
-            app:outerCircleColor="@color/Aqua"
-            app:outerCircleRadius="30dp"
+            app:outerCircleColor="@color/Gold"
+            app:outerCircleRadius="28dp"
             app:innerCircleColor="@color/Gold"
-            app:innerCircleRadius="20dp"
+            app:innerCircleRadius="12dp"
             app:innerLineColor="@color/Blue"
             app:innerLineWidth="3dp"/>
 </RelativeLayout>
