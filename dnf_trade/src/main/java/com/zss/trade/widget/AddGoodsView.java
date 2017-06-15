@@ -183,8 +183,8 @@ public class AddGoodsView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 //避免滑出触发点击事件
-                if ((int) (event.getRawX() - mMoveX) != 0
-                        || (int) (event.getRawY() - mMoveY) != 0) {
+                if ((int) (event.getRawX() - mMoveX) > 5
+                        || (int) (event.getRawY() - mMoveY) > 5) {
                     return true;
                 }
                 break;

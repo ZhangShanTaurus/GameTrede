@@ -11,6 +11,8 @@ import android.os.Bundle;
  */
 public class IntentUtils {
 
+    private IntentUtils(){}
+
     public static void intent(Context context, Class cls) {
         intent(context, cls, false);
     }
