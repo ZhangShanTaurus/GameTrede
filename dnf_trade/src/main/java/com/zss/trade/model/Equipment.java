@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 Facishare Technology Co., Ltd. All Rights Reserved.
  */
-package com.zss.trade.entity;
+package com.zss.trade.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

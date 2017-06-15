@@ -4,4 +4,10 @@
     <string name="tab_deal">交易</string>
     <string name="tab_chart">统计</string>
 
+    <string name="goods_type">物品类型:</string>
+    <string name="hint_goods_type_not_null">请填写物品类型</string>
+    <string name="hint_goods_type_is_exist">该类型已存在</string>
+    <string name="hint_insert_success">添加成功!</string>
+    <string name="hint_insert_failure">添加失败!</string>
+
 </resources>

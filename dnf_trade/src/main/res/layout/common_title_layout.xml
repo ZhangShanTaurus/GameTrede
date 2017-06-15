@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Facishare Technology Co., Ltd. All Rights Reserved.
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/common_title_background_color">
+
+    <ImageView
+            android:id="@+id/title_img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_arrow_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+    <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            tools:text="Title"
+            android:textSize="20dp"
+            android:textColor="@color/Black"/>
+</RelativeLayout>

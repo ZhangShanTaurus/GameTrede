@@ -1,13 +1,16 @@
 package com.zss.trade.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.zss.trade.DnfTradeApp;
 import com.zss.trade.R;
+import com.zss.trade.gen.GoodsTypeDao;
 import com.zss.trade.goods.FragmentWeapon;
+import com.zss.trade.goods_type.AddGoodsTypeActivity;
+import com.zss.trade.model.GoodsType;
 import com.zss.trade.ui.base.BaseFragment;
+import com.zss.trade.utils.IntentUtils;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -25,8 +28,8 @@ import android.view.ViewGroup;
  */
 public class FragmentGoods extends BaseFragment {
 
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    private TabFragmentAdapter mAdapter;
+    private GoodsTypeDao mGoodsTypeDao;
 
     public static FragmentGoods newInstance() {
         Bundle args = new Bundle();
@@ -36,13 +39,9 @@ public class FragmentGoods extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGoodsTypeDao = DnfTradeApp.getInstances().getDaoSession().getGoodsTypeDao();
     }
 
     @Nullable
@@ -54,71 +53,53 @@ public class FragmentGoods extends BaseFragment {
         return view;
     }
 
-    private void initView(View view) {
-        mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
-
-        //初始化标题以及Fragment内容
-        this.fmList.clear();
-        this.titleList.clear();
-        titleList.add("武器");
-        titleList.add("装备");
-        titleList.add("首饰");
-        titleList.add("辅助");
-        titleList.add("材料");
-        titleList.add("消耗品");
-        titleList.add("副职业");
-
-        FragmentWeapon fm1 = FragmentWeapon.newInstance();
-        FragmentWeapon fm2 = FragmentWeapon.newInstance();
-        FragmentWeapon fm3 = FragmentWeapon.newInstance();
-        FragmentWeapon fm4 = FragmentWeapon.newInstance();
-        FragmentWeapon fm5 = FragmentWeapon.newInstance();
-        FragmentWeapon fm6 = FragmentWeapon.newInstance();
-        FragmentWeapon fm7 = FragmentWeapon.newInstance();
-
-        fmList.add(fm1);
-        fmList.add(fm2);
-        fmList.add(fm3);
-        fmList.add(fm4);
-        fmList.add(fm5);
-        fmList.add(fm6);
-        fmList.add(fm7);
-
-        mViewPager.setAdapter(new TabFragmentAdapter(getChildFragmentManager(), fmList, titleList));
-        mTabLayout.setupWithViewPager(mViewPager);
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<GoodsType> tabList = mGoodsTypeDao.queryBuilder().build().list();
+        mAdapter.setGoodsTypeList(tabList);
     }
 
-    private List<String> titleList = new ArrayList<>();
-    private List<FragmentWeapon> fmList = new ArrayList<>();
+    private void initView(View view) {
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        View mEditChannel = view.findViewById(R.id.edit_channel);
+        mEditChannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.intent(getActivity(), AddGoodsTypeActivity.class);
+            }
+        });
+        mAdapter = new TabFragmentAdapter(getChildFragmentManager());
+        viewPager.setAdapter(mAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
-    class TabFragmentAdapter extends FragmentPagerAdapter {
-        List<String> titleList;
-        List<FragmentWeapon> fmList;
+    static class TabFragmentAdapter extends FragmentPagerAdapter {
+        private List<GoodsType> goodsTypeList;
 
-        public TabFragmentAdapter(FragmentManager fm, List<FragmentWeapon> fmList, List<String> titleList) {
+        public TabFragmentAdapter(FragmentManager fm) {
             super(fm);
-            this.fmList = fmList;
-            this.titleList = titleList;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fmList.get(position);
+            return FragmentWeapon.newInstance();
         }
 
         @Override
         public int getCount() {
-            if (fmList == null) {
-                return 0;
-            } else {
-                return fmList.size();
-            }
+            return goodsTypeList == null ? 0 : goodsTypeList.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return titleList.get(position);
+            return goodsTypeList.get(position).getTypeDesc();
+        }
+
+        public void setGoodsTypeList(List<GoodsType> goodsTypeList) {
+            this.goodsTypeList = goodsTypeList;
+            notifyDataSetChanged();
         }
     }
 }

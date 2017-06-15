@@ -2,24 +2,25 @@ package com.zss.trade.ui;
 
 import com.zss.trade.R;
 import com.zss.trade.add_goods.AddGoodsActivity;
-import com.zss.trade.ui.base.BaseFragmentActivity;
 import com.zss.trade.utils.IntentUtils;
 import com.zss.trade.widget.AddGoodsView;
 import com.zss.trade.widget.TabIndicatorView;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 /**
  * 主页面
  * Created by Administrator on 2016/11/9.
  */
-public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener {
+public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener {
 
     private Class[] fragments = {FragmentGoods.class, FragmentDeal.class, FragmentChart.class};
     /**
@@ -36,6 +37,11 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
      */
     private static final int ICON__RESOURCE_CHECKED[] =
             {R.drawable.icon_tab_goods_checked, R.drawable.icon_tab_deal_checked, R.drawable.icon_tab_chart_checked};
+
+    /**
+     * 顶部描述View
+     */
+    private TextView mDescText;
     private FragmentTabHost tabHost;
 
     @Override
@@ -47,6 +53,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     }
 
     private void initAddGoodsViews() {
+        mDescText = (TextView) findViewById(R.id.tv_desc);
         final AddGoodsView addGoodsView = (AddGoodsView) findViewById(R.id.add_goods);
         final View view = findViewById(android.R.id.tabhost);
         addGoodsView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -80,6 +87,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
 
     @Override
     public void onTabChanged(String tabId) {
+        mDescText.setText(tabId);
         TabWidget tabWidget = tabHost.getTabWidget();
         for (int i = 0, count = tabWidget.getTabCount(); i < count; i++) {
             TabIndicatorView tabIndicatorView = (TabIndicatorView) tabWidget.getChildAt(i);
@@ -95,9 +103,9 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     }
 
     private enum TabType {
-        GOODS("Goods"),
-        DEAL("Deal"),
-        CHART("Chart");
+        GOODS("物品"),
+        DEAL("交易"),
+        CHART("统计");
 
         private String desc;
 
