@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Facishare Technology Co., Ltd. All Rights Reserved.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/common_background_color">
+
+    <include layout="@layout/common_title_layout"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/add_goods_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_type"
+                android:textColor="@color/Black"
+                android:textSize="14dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"/>
+
+        <Button
+                android:id="@+id/btn_add_goods_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:text="添加"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+
+        <EditText
+                android:id="@+id/et_add_goods_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btn_add_goods_type"
+                android:layout_toRightOf="@+id/add_goods_type"
+                android:textSize="16dp"
+                android:textColor="@color/Black"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.zss.trade.entity;
+package com.zss.trade.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

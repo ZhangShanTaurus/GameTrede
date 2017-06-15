@@ -23,6 +23,10 @@
         <activity android:name=".add_goods.AddGoodsActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="standard"/>
+
+        <activity android:name=".goods_type.AddGoodsTypeActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="standard"/>
     </application>
 
 </manifest>

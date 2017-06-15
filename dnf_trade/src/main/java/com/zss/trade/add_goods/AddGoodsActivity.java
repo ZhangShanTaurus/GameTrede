@@ -8,8 +8,8 @@ import java.util.Random;
 
 import com.zss.trade.DnfTradeApp;
 import com.zss.trade.R;
-import com.zss.trade.entity.User;
 import com.zss.trade.gen.UserDao;
+import com.zss.trade.model.User;
 import com.zss.trade.ui.base.BaseFragmentActivity;
 
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import android.widget.TextView;
  * 实现的主要功能。
  * 创建日期 2017/6/12
  */
-public class AddGoodsActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class AddGoodsActivity extends BaseFragmentActivity {
 
     private UserDao userDao;
     private Button mAddBtn;
@@ -33,9 +33,13 @@ public class AddGoodsActivity extends BaseFragmentActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_goods);
         userDao = DnfTradeApp.getInstances().getDaoSession().getUserDao();
         initView();
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_add_goods;
     }
 
     private void initView() {
@@ -48,6 +52,7 @@ public class AddGoodsActivity extends BaseFragmentActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_add_goods:
                 addUser();
@@ -77,5 +82,10 @@ public class AddGoodsActivity extends BaseFragmentActivity implements View.OnCli
             stringBuilder.append(user.toString()).append("\n");
         }
         mInfoText.setText(stringBuilder.toString());
+    }
+
+    @Override
+    protected String getTitleString() {
+        return "添加物品";
     }
 }

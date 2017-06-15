@@ -3,7 +3,6 @@
  */
 package com.zss.trade.goods;
 
-import com.zss.trade.R;
 import com.zss.trade.ui.base.BaseFragment;
 
 import android.os.Bundle;
@@ -34,8 +33,6 @@ public class FragmentWeapon extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         TextView textView = new TextView(getContext());
-        textView.setText(FragmentWeapon.class.getSimpleName());
-        textView.setTextColor(getResources().getColor(R.color.Aqua));
         return textView;
     }
 }

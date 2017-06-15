@@ -50,8 +50,8 @@ public class AddGoodsView extends View {
 
     public AddGoodsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mScreenWidth = ScreenUtils.getScreenWidth();
-        mScreenHeight = ScreenUtils.getScreenHeight();
+        mScreenWidth = ScreenUtils.getScreenWidth(context);
+        mScreenHeight = ScreenUtils.getScreenHeight(context);
         initAttribute(attrs);
         initCirclePaint();
         initLinePaint();

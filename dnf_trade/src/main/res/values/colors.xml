@@ -146,5 +146,16 @@
 
     <!--主页面底部Tab导航中文字正常与选中状态颜色-->
     <color name="main_tab_indicator_normal_color">@color/Black</color>
-    <color name="main_tab_indicator_checked_color">@color/DeepPink</color>
+    <color name="main_tab_indicator_checked_color">@color/primary_color</color>
+
+    <!--应用内主色调-->
+    <color name="primary_color">#4caf50</color>
+
+    <color name="goods_tab_text_normal_color">@color/Black</color>
+    <color name="goods_tab_text_checked_color">@color/White</color>
+
+    <!--通用背景色-->
+    <color name="common_background_color">@color/White</color>
+    <!--标题通用背景色-->
+    <color name="common_title_background_color">#8bc34a</color>
 </resources>

@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent" android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@color/White">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            app:tabSelectedTextColor="@color/Red"
-            app:tabTextColor="@color/Black"
-            app:tabIndicatorColor="@color/Red"/>
+            android:layout_height="35dp"
+            android:background="@color/primary_color">
+
+        <LinearLayout
+                android:id="@+id/edit_channel"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:alpha="0.8"
+                android:gravity="center">
+
+            <ImageView
+                    android:layout_width="@dimen/goods_edit_channel_size"
+                    android:layout_height="@dimen/goods_edit_channel_size"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_edit_channel"/>
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/edit_channel"
+                android:textSize="@dimen/goods_tab_text_size"
+                app:tabSelectedTextColor="@color/goods_tab_text_checked_color"
+                app:tabTextColor="@color/goods_tab_text_normal_color"
+                app:tabIndicatorHeight="@dimen/goods_tab_indicator_height"
+                app:tabIndicatorColor="@color/goods_tab_text_checked_color"
+                app:tabMode="scrollable"/>
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
