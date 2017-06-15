@@ -42,10 +42,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="80dp"
             android:layout_marginRight="20dp"
-            app:outerCircleColor="@color/Gold"
+            app:outerCircleColor="@color/DeepPink"
             app:outerCircleRadius="28dp"
-            app:innerCircleColor="@color/Gold"
+            app:innerCircleColor="@color/DeepPink"
             app:innerCircleRadius="12dp"
-            app:innerLineColor="@color/Blue"
+            app:innerLineColor="@color/Wheat"
             app:innerLineWidth="3dp"/>
 </RelativeLayout>
