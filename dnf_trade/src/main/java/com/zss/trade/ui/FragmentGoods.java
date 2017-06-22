@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 物价
+ * 物品
  * Created by Administrator on 2016/11/9.
  */
 public class FragmentGoods extends BaseFragment {

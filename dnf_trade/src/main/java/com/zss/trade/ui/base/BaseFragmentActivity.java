@@ -12,6 +12,7 @@ import android.widget.TextView;
  * Activity基类
  */
 public abstract class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
+    protected final String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
